@@ -199,49 +199,51 @@ export default function BlogPage() {
                     <hr className="border-gray-200 mt-2" />
 
                     {/* Buttons */}
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 flex-wrap">
-                      <button
-                        onClick={() => {
-                          setEditing(b);
-                          setShowForm(true);
-                        }}
-                        className="flex items-center justify-center w-full sm:w-auto gap-2 px-4 py-2 rounded-lg text-sm font-medium border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors"
-                      >
-                        <Edit3 className="w-4 h-4" />
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => setConfirm({ open: true, id: b.id, action: "delete" })}
-                        disabled={loadingId === b.id} // disable during loading
-                        className="flex items-center justify-center w-full sm:w-auto gap-2 px-4 py-2 rounded-lg text-sm font-medium border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors disabled:opacity-50"
-                      >
-                        {loadingId === b.id ? "Deleting..." : (
-                          <>
-                            <Trash2 className="w-4 h-4" />
-                            Delete
-                          </>
-                        )}
-                      </button>
+<div className="flex flex-col md:flex-row items-center gap-3 flex-wrap md:justify-start">
+  <button
+    onClick={() => {
+      setEditing(b);
+      setShowForm(true);
+    }}
+    className="flex items-center justify-center w-full md:w-auto gap-2 px-4 py-2 rounded-lg text-sm font-medium border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors whitespace-nowrap"
+  >
+    <Edit3 className="w-4 h-4" />
+    Edit
+  </button>
+
+  <button
+    onClick={() => setConfirm({ open: true, id: b.id, action: "delete" })}
+    disabled={loadingId === b.id}
+    className="flex items-center justify-center w-full md:w-auto gap-2 px-4 py-2 rounded-lg text-sm font-medium border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors disabled:opacity-50 whitespace-nowrap"
+  >
+    {loadingId === b.id ? "Deleting..." : (
+      <>
+        <Trash2 className="w-4 h-4" />
+        Delete
+      </>
+    )}
+  </button>
+
+  {b.status === "PUBLISHED" ? (
+    <button
+      onClick={() => handleUnpublish(b.id)}
+      disabled={loadingId === b.id}
+      className="flex items-center justify-center w-full md:w-auto gap-2 px-4 py-2 rounded-lg text-sm font-medium border border-yellow-600 text-yellow-600 hover:bg-yellow-600 hover:text-white transition-colors disabled:opacity-50 whitespace-nowrap"
+    >
+      {loadingId === b.id ? "Loading..." : "Unpublish"}
+    </button>
+  ) : (
+    <button
+      onClick={() => handlePublish(b.id)}
+      disabled={loadingId === b.id}
+      className="flex items-center justify-center w-full md:w-auto gap-2 px-4 py-2 rounded-lg text-sm font-medium border border-green-600 text-green-600 hover:bg-green-600 hover:text-white transition-colors disabled:opacity-50 whitespace-nowrap"
+    >
+      {loadingId === b.id ? "Loading..." : "Publish"}
+    </button>
+  )}
+</div>
 
 
-                      {b.status === "PUBLISHED" ? (
-                        <button
-                          onClick={() => handleUnpublish(b.id)}
-                          disabled={loadingId === b.id}
-                          className="flex items-center justify-center w-full sm:w-auto gap-2 px-4 py-2 rounded-lg text-sm font-medium border border-yellow-600 text-yellow-600 hover:bg-yellow-600 hover:text-white transition-colors disabled:opacity-50"
-                        >
-                          {loadingId === b.id ? "Loading..." : "Unpublish"}
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => handlePublish(b.id)}
-                          disabled={loadingId === b.id}
-                          className="flex items-center justify-center w-full sm:w-auto gap-2 px-4 py-2 rounded-lg text-sm font-medium border border-green-600 text-green-600 hover:bg-green-600 hover:text-white transition-colors disabled:opacity-50"
-                        >
-                          {loadingId === b.id ? "Loading..." : "Publish"}
-                        </button>
-                      )}
-                    </div>
                   </div>
                 </motion.div>
               ))}
